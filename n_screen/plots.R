@@ -73,13 +73,13 @@ plot2<-ggplot(summary, aes(x = as.factor(n), y = ed_average)) +
 plot3<-ggplot(summary, aes(x = as.factor(n), y = entropy_without_wildtype)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
-  labs(x = "n(possible mutations)", y = "Entropy of mutants") +
+  labs(x = "n(possible mutations)", y = "Entropy ") +
   theme_bw()
 #plot ed_average_without_wildtype
 plot4<-ggplot(summary, aes(x = as.factor(n), y = ed_average_without_wildtype)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
-  labs(x = "n(possible mutations)", y = "Euclidean Distance of mutants") +
+  labs(x = "n(possible mutations)", y = "Euclidean Distance ") +
   theme_bw()
 #plot bray_average_without_wildtype
 plot5<-ggplot(summary, aes(x = as.factor(n), y = bray_average)) +
@@ -91,7 +91,7 @@ plot5<-ggplot(summary, aes(x = as.factor(n), y = bray_average)) +
 plot6<-ggplot(summary, aes(x = as.factor(n), y = bray_average_without_wildtype)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
-  labs(x = "n(possible mutations)", y = "Bray–Curtis Distance of mutants") +
+  labs(x = "n(possible mutations)", y = "Bray–Curtis Distance") +
   theme_bw()
 #plot mutation sims_with_mutations  frequency 
 plot7<-ggplot(summary, aes(x = as.factor(n), y = sims_with_mutations )) +
@@ -116,7 +116,7 @@ save(summary, file = "summary_2.RData")
 
 library(cowplot)
 #Plot all graphs contains mutants
-plot_all_mutants<-plot_grid(plot3,plot4,plot6,plot7, labels = c("(a)", "(b)","(c)", "(d)"), hjust=0, vjust=1.3)
+plot_all_mutants<-plot_grid(plot7,plot3,plot4,plot6, labels = c("(a)", "(b)","(c)", "(d)"), hjust=0, vjust=1.3)
 #Plot all graphs contains S and mutants
 plot_all_S<-plot_grid(plot1,plot2,plot5, labels = c("(a)", "(b)","(c)"), hjust=0, vjust=1.3)
 
