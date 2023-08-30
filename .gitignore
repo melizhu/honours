@@ -1,2 +1,4 @@
 */output/*
+!*/output/.gitignore
 */plots/*
+!*/plots/.gitignore
