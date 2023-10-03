@@ -98,6 +98,7 @@ plot7<-ggplot(summary, aes(x = as.factor(n), y = sims_with_mutations )) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
   labs(x = "n(possible mutations)", y = "P(mutation spread)") +
+  ylim(0, 1)+
   theme_bw()
 
 #save plots
