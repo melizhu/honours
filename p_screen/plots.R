@@ -7,7 +7,20 @@ repfile<-32
 
 #K is the changing parameter in the pop_screen #change this make it looks nice 
 K <-  as.integer(10^seq(5, 9, by = 0.25))
-
+#pow10 labels gives labels in scientific notation on powers of ten, and no label otherwise.
+pow10_labels <- function(x){
+  is_pow10 <- function(x){
+    #NB: This function is extremely approximate; it is only for use within pow10_labels.
+    eps <- 0.0001
+    n <- log10(x)
+    return(abs(n - round(n)) < eps)
+  }
+  ifelse(
+    is_pow10(as.numeric(x)),
+    scales::label_scientific()(as.numeric(x)),
+    ""
+  )
+}
 
 
 # Load the necessary functions
@@ -63,28 +76,28 @@ plot1<-ggplot(summary, aes(x = as.factor(K), y = entropy)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
   labs(x = "Initial population size", y = "Entropy") +
-  scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
+  scale_x_discrete(labels = pow10_labels) +
   theme_bw()
 #plot ed_average
 plot2<-ggplot(summary, aes(x = as.factor(K), y = ed_average)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
   labs(x = "Initial population size", y = "Eucliean distance") +
-  scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
+  scale_x_discrete(labels = pow10_labels) +
   theme_bw()
 #plot entropy_without_wildtype
 plot3<-ggplot(summary, aes(x = as.factor(K), y = entropy_without_wildtype)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
   labs(x = "Initial population size", y = "Entropy") +
-  scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
+  scale_x_discrete(labels = pow10_labels) +
   theme_bw()
 #plot ed_average_without_wildtype
 plot4<-ggplot(summary, aes(x = as.factor(K), y = ed_average_without_wildtype)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
   labs(x = "Initial population size", y = "Euclidean Distance") +
-  scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
+  scale_x_discrete(labels = pow10_labels)+
   theme_bw()
 
 #plot bray_average
@@ -92,21 +105,21 @@ plot5<-ggplot(summary, aes(x = as.factor(K), y = bray_distance_average)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
   labs(x = "Initial population size", y = "Bray-Curtis Distance") +
-  scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
+  scale_x_discrete(labels = pow10_labels)+
   theme_bw()
 #plot bray_average_without_wildtype
 plot6<-ggplot(summary, aes(x = as.factor(K), y = bray_average_without_wildtype)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
   labs(x = "Initial population size", y = "Bray-Curtis Distance") +
-  scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
+  scale_x_discrete(labels = pow10_labels) +
   theme_bw()
 #plot mutation sims_with_mutations  frequency 
 plot7<-ggplot(summary, aes(x = as.factor(K), y = sims_with_mutations )) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
   labs(x = "Initial population size", y = "P(mutation spread)") +
-  scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
+  scale_x_discrete(labels = pow10_labels)+
   theme_bw()
 
 
@@ -129,13 +142,13 @@ save(summary, file = "summary_pop.RData")
 
 
 #Plot all graphs contains mutants
-plot_all_mutants<-plot_grid(plot3, plot4,plot6,plot7, labels = c("(a)", "(b)","(c)", "(d)"))
+plot_all_mutants<-plot_grid(plot7,plot3, plot4,plot6, labels = c("(a)", "(b)","(c)", "(d)"),hjust=0, vjust=1.3)
 
-ggsave("all_mutants_pop.pdf",plot_all_mutants , width =20, height = 20)
+ggsave("all_mutants_pop.pdf",plot_all_mutants , width =8, height = 8)
 
 
 #Plot all graphs contains S and mutants
-plot_all_S<-plot_grid(plot1,plot2,plot5, labels = c("(a)", "(b)","(c)"))
+plot_all_S<-plot_grid(plot1,plot2,plot5, labels = c("(a)", "(b)","(c)"),hjust=0, vjust=1.3)
 
-ggsave("plot_S_pop.pdf",plot_all_S , width =20, height = 20)
+ggsave("plot_S_pop.pdf",plot_all_S , width =8, height = 8)
 
