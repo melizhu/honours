@@ -119,7 +119,7 @@ library(cowplot)
 #Plot all graphs contains mutants
 plot_all_mutants<-plot_grid(plot7,plot3,plot4,plot6, labels = c("(a)", "(b)","(c)", "(d)"), hjust=0, vjust=1.3)
 #Plot all graphs contains S and mutants
-plot_all_S<-plot_grid(plot1,plot2,plot5, labels = c("(a)", "(b)","(c)"), hjust=0.1, vjust=1.3)
+plot_all_S<-plot_grid(plot1,plot2,plot5, labels = c("(a)", "(b)","(c)"), hjust=0, vjust=1.3)
 
 ggsave("plots/plot_all_mutants.pdf", plot_all_mutants, width = 8, height = 8)
 ggsave("plots/plot_all_S.pdf", plot_all_S, width = 8, height=8)
