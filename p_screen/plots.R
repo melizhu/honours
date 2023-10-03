@@ -62,28 +62,28 @@ for (i in 1:repfile) {
 plot1<-ggplot(summary, aes(x = as.factor(K), y = entropy)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
-  labs(x = "population size", y = "Entropy") +
+  labs(x = "Initial population size", y = "Entropy") +
   scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
   theme_bw()
 #plot ed_average
 plot2<-ggplot(summary, aes(x = as.factor(K), y = ed_average)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
-  labs(x = "population size", y = "Eucliean distance") +
+  labs(x = "Initial population size", y = "Eucliean distance") +
   scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
   theme_bw()
 #plot entropy_without_wildtype
 plot3<-ggplot(summary, aes(x = as.factor(K), y = entropy_without_wildtype)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
-  labs(x = "population size", y = "Entropy of mutants") +
+  labs(x = "Initial population size", y = "Entropy") +
   scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
   theme_bw()
 #plot ed_average_without_wildtype
 plot4<-ggplot(summary, aes(x = as.factor(K), y = ed_average_without_wildtype)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
-  labs(x = "population size", y = "Euclidean Distance of mutants") +
+  labs(x = "Initial population size", y = "Euclidean Distance") +
   scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
   theme_bw()
 
@@ -91,21 +91,21 @@ plot4<-ggplot(summary, aes(x = as.factor(K), y = ed_average_without_wildtype)) +
 plot5<-ggplot(summary, aes(x = as.factor(K), y = bray_distance_average)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
-  labs(x = "population size", y = "Bray Distance") +
+  labs(x = "Initial population size", y = "Bray-Curtis Distance") +
   scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
   theme_bw()
 #plot bray_average_without_wildtype
 plot6<-ggplot(summary, aes(x = as.factor(K), y = bray_average_without_wildtype)) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
-  labs(x = "population size", y = "Bray Distance of mutants") +
+  labs(x = "Initial population size", y = "Bray-Curtis Distance") +
   scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
   theme_bw()
 #plot mutation sims_with_mutations  frequency 
 plot7<-ggplot(summary, aes(x = as.factor(K), y = sims_with_mutations )) +
   geom_boxplot(outlier.alpha = 0) +
   geom_jitter(width = 0.2, height = 0, col = "blue", alpha = 0.5) +
-  labs(x = "population size", y = "P(mutation spread)") +
+  labs(x = "Initial population size", y = "P(mutation spread)") +
   scale_x_discrete(labels = function(x){scales::label_scientific()(as.numeric(x))}) +
   theme_bw()
 
