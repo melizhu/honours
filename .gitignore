@@ -2,3 +2,4 @@
 !*/output/.gitignore
 */plots/*
 !*/plots/.gitignore
+.Rhistory
