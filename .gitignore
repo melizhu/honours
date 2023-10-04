@@ -1,6 +1,4 @@
-*/output/*
-!*/output/.gitignore
-*/plots/*
-!*/plots/.gitignore
+output/*
+plots/*
 .Rhistory
 .Rproj.user
