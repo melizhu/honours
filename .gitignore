@@ -3,3 +3,4 @@
 */plots/*
 !*/plots/.gitignore
 .Rhistory
+.Rproj.user
