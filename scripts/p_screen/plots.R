@@ -24,7 +24,7 @@ pow10_labels <- function(x){
 
 
 # Load the necessary functions
-source("./NEW_ALL_functions.R")
+source("scripts/NEW_ALL_functions.R")
 # Create empty data frame for both entropy values , average_ed, Bray-Curtis_distance and rate of mutations in sims values
 summary <- data.frame(K = rep(K, each = repfile),
                       PDtable = rep(1:repfile, length(K)),

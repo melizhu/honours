@@ -8,7 +8,7 @@ repfile<-32
 
 
 # Load the necessary functions
-source("./NEW_ALL_functions.R")
+source("scripts/NEW_ALL_functions.R")
 
 
 # Create empty data frame for both entropy values and average_ed values

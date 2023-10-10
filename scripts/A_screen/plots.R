@@ -10,7 +10,7 @@ A <-seq(0.8,1.3,by=0.05)
 
 
 # Load the necessary functions
-source("NEW_ALL_functions.R")
+source("scripts/NEW_ALL_functions.R")
 # Create empty data frame for both entropy values , average_ed, Bray-Curtis_distance and rate of mutations in sims values
 summary <- data.frame(A = rep(A, each = repfile),
                       PDtable = rep(1:repfile, length(A)),

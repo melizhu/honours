@@ -6,7 +6,7 @@ if (length(args) < 1) { # no arguments provided
   batch <- as.integer(args[1])
 }
 
-source("./R/all_functions.R")
+source("scripts/NEW_ALL_functions.R")
 
 # Define the number of different kinds of mutations
 n <- 2^(0:7)
