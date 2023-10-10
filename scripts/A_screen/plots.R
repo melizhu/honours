@@ -26,7 +26,7 @@ summary <- data.frame(A = rep(A, each = repfile),
 #A loop to go through all the sims from rep1 to rep32
 for (i in 1:repfile) {
   # Load the file
-  load(paste0("SimResults_A_screen_rep_", i, ".RData"))
+  load(paste0("output/A_screen/SimResults_A_screen_rep_", i, ".RData"))
   # Create empty data frame for the values
   sims_summary <- data.frame(A = rep(A, each = l), #go through each file with l=1
                              PDtable = rep(i, length(A)),
@@ -103,17 +103,17 @@ plot7<-ggplot(summary, aes(x = as.factor(A), y = sims_with_mutations )) +
 
 
 #save plots
-ggsave("entropy_A_screen.pdf", plot1, width =10, height = 10)
-ggsave("ed_average_A_screen.pdf", plot2, width = 10, height = 10)
-ggsave("entropy_without_wildtype_A_screen.pdf", plot3, width = 10, height = 10)
-ggsave("ed_average_without_wildtype_A_screen.pdf", plot4, width = 10, height = 10)
-ggsave("bray_average_A_screen.pdf", plot5, width = 10, height = 10)
-ggsave("bray_average_without_wildtype_A_screen.pdf", plot6, width = 10, height = 10)
-ggsave("sims_with_mutations_A_screen.pdf", plot7, width = 10, height = 10)
+ggsave("plots/A_screen/entropy_A_screen.pdf", plot1, width =10, height = 10)
+ggsave("plots/A_screen/ed_average_A_screen.pdf", plot2, width = 10, height = 10)
+ggsave("plots/A_screen/entropy_without_wildtype_A_screen.pdf", plot3, width = 10, height = 10)
+ggsave("plots/A_screen/ed_average_without_wildtype_A_screen.pdf", plot4, width = 10, height = 10)
+ggsave("plots/A_screen/bray_average_A_screen.pdf", plot5, width = 10, height = 10)
+ggsave("plots/A_screen/bray_average_without_wildtype_A_screen.pdf", plot6, width = 10, height = 10)
+ggsave("plots/A_screen/sims_with_mutations_A_screen.pdf", plot7, width = 10, height = 10)
 
 # save the database
 #compount figure 4 A B C D without Wildtype 
-save(summary, file = "summary_A.RData")
+save(summary, file = "output/A_screen/summary_A.RData")
 
 
 
@@ -125,8 +125,8 @@ plot_all_mutants<-plot_grid(plot7,plot3,plot4,plot6, labels = c("(a)", "(b)","(c
 #Plot all graphs contains S and mutants
 plot_all_S<-plot_grid(plot1,plot2,plot5, labels = c("(a)", "(b)","(c)"), hjust=0, vjust=1.3)
 
-ggsave("plot_all_mutants.pdf", plot_all_mutants, width = 8, height = 8)
-ggsave("plot_all_S.pdf", plot_all_S, width = 8, height=8)
+ggsave("plots/A_screen/plot_all_mutants.pdf", plot_all_mutants, width = 8, height = 8)
+ggsave("plots/A_screen/plot_all_S.pdf", plot_all_S, width = 8, height=8)
 
 
 
