@@ -54,4 +54,4 @@ for (i in 1:length(A)) {
   sims[[i]]$results <- replicate(m, simulate(strains, K = K, A = A[i], miu = miu, Sini = Sini))
 }
 
-save(sims, file = paste0("./results/SimResults_A_screen_rep_", batch, ".RData"))
+save(sims, file = paste0("output/A_screen/SimResults_A_screen_rep_", batch, ".RData"))
