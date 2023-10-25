@@ -11,20 +11,20 @@ ggplot(singlesim) +
   geom_line(aes(x = time, y = value, colour = name))
 
 #create a new big table for all the simulations
-t1<-bind_rows(lapply(sims, function(sim){
-  bind_rows(lapply(sim$results, function(results){
+t1 <- bind_rows(lapply(sims, function(sim) {
+  bind_rows(lapply(sim$results, function(results) {
     as.tibble(results) |> pivot_longer(-time, names_to = "strain", values_to = "pop")
-  }), .id="replicate")
-}), .id="sim")
+  }), .id = "replicate")
+}), .id = "sim")
 
 # plot line plots for multiple simulations
 t1 %>%
   # here we plot 1 to 6 simulations from total 1000 simulations
-  filter(sim==3, replicate %in% 1:6) %>%
+  filter(sim == 3, replicate %in% 1:6) %>%
   ggplot() +
   geom_line(aes(x = time, y = log(pop), colour = strain)) +
   labs(x = "time", y = "ln(population size)") +
-  facet_wrap(~replicate, ncol = 3)+
+  facet_wrap(~ replicate, ncol = 3) +
   theme_bw()
 
 
@@ -45,11 +45,16 @@ for (j in 1:length(sims[[i]]$results)) {
   
 }
 
-#generate the "winning" distribution for each "winner" 
-distribution<- apply(freq_T[, 2:ncol(freq_T)], 2, function(x) sum(x)/ nrow(freq_T))
+#generate the "winning" distribution for each "winner"
+distribution <-
+  apply(freq_T[, 2:ncol(freq_T)], 2, function(x)
+    sum(x) / nrow(freq_T))
 
 # Plotting a histogram
-barplot(distribution, col = "skyblue", main = "Winning distribution of 1000 simulations",
-        xlab = "Categories", ylab = "Values")
-
-
+barplot(
+  distribution,
+  col = "skyblue",
+  main = "Winning distribution of 1000 simulations",
+  xlab = "Categories",
+  ylab = "Values"
+)
