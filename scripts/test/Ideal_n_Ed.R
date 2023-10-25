@@ -22,4 +22,5 @@ average_distance[k] <- sum(distance_matrix) / (num_points[k] * num_points[k])
 }
 
 # Print the average distance
-average_distance-save_median
+print(average_distance)
+
