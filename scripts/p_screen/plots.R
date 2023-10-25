@@ -5,9 +5,10 @@ l <-1
 m <- 1000
 repfile<-32
 
-#K is the changing parameter in the pop_screen #change this make it looks nice 
+#K is the changing parameter in the pop_screen 
 K <-  as.integer(10^seq(5, 9, by = 0.25))
-#pow10 labels gives labels in scientific notation on powers of ten, and no label otherwise.
+#pow10_labels gives labels in scientific notation on powers of ten, and no label otherwise.
+#pow10_labels is written for K to look nicer in the plots x axis
 pow10_labels <- function(x){
   is_pow10 <- function(x){
     #NB: This function is extremely approximate; it is only for use within pow10_labels.
@@ -32,8 +33,8 @@ summary <- data.frame(K = rep(K, each = repfile),
                       entropy_without_wildtype=NA,
                       ed_average=NA,
                       ed_average_without_wildtype=NA,
-                      bray_distance_average=NA, #Bray-Curtis_distance average
-                      bray_average_without_wildtype=NA, #Bray-Curtis_distance average _without_wildtype
+                      bray_distance_average=NA, 
+                      bray_average_without_wildtype=NA, 
                       sims_with_mutations=NA)
 
 
@@ -133,22 +134,16 @@ ggsave("plots/p_screen/bray_average_without_wildtype_pop_screen.pdf", plot6, wid
 ggsave("plots/p_screen/sims_with_mutations_pop_screen.pdf", plot7, width = 10, height = 10)
 
 # save the database
-#compount figure 4 A B C D without Wildtype 
 save(summary, file = "output/p_screen/summary_pop.RData")
 
-
-
-
-
-
-#Plot all graphs contains mutants
+#combine plots of the mutants
+library(cowplot)
+#Plot and save all graphs contains mutants
 plot_all_mutants<-plot_grid(plot7,plot3, plot4,plot6, labels = c("(a)", "(b)","(c)", "(d)"),hjust=0, vjust=1.3)
-
 ggsave("plots/p_screen/all_mutants_pop.pdf",plot_all_mutants , width =8, height = 8)
 
 
-#Plot all graphs contains S and mutants
+#Plot and save all graphs contains S and mutants
 plot_all_S<-plot_grid(plot1,plot2,plot5, labels = c("(a)", "(b)","(c)"),hjust=0, vjust=1.3)
-
 ggsave("plots/p_screen/plot_S_pop.pdf",plot_all_S , width =8, height = 8)
 
