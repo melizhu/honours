@@ -1,3 +1,5 @@
+#Calculate the theoretical maximum Bray_Curtis distance for different n
+
 # Define the number of dimensions and points
 num_dimensions <- 2^(0:7)
 num_points <- num_dimensions

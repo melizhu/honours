@@ -1,3 +1,4 @@
+#Calculate the theoretical maximum Euclidean distance for different n
 
 # Define the number of dimensions and points
 num_dimensions <- 2^(0:7)

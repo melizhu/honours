@@ -1,4 +1,6 @@
-
+#Here is a example code that I used to do analyzing the data
+#Here I was doing analyzing for p_screen to find what are those median values
+#S here has the same value initial population size I choose
 S <-as.integer(10^seq(5, 9, by = 0.25))
 S<- as.numeric(S)
 # Create an empty vector to store the median values
