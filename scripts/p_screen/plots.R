@@ -136,7 +136,7 @@ ggsave("plots/p_screen/sims_with_mutations_pop_screen.pdf", plot7, width = 10, h
 # save the database
 save(summary, file = "output/p_screen/summary_pop.RData")
 
-#combine plots of the mutants
+#combine plots 
 library(cowplot)
 #Plot and save all graphs contains mutants
 plot_all_mutants<-plot_grid(plot7,plot3, plot4,plot6, labels = c("(a)", "(b)","(c)", "(d)"),hjust=0, vjust=1.3)

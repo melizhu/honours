@@ -113,7 +113,7 @@ ggsave("plots/n_screen/sims_with_mutations_nscreen_10^6.pdf", plot7, width = 8, 
 # save the database
 save(summary, file = "output/n_screen/summary_n.RData")
 
-#combine plots of the mutants
+#combine plots 
 library(cowplot)
 #Plot all graphs contains mutants
 plot_all_mutants<-plot_grid(plot7,plot3,plot4,plot6, labels = c("(a)", "(b)","(c)", "(d)"), hjust=0, vjust=1.3)
