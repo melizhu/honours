@@ -1,12 +1,17 @@
 library(adaptivetau)
 library(vegan)
 
+# simulate is used for generating simulations 
 simulate <- function(strains, K, A, miu, tf=1000, Sini)
 {
   n <- nrow(strains)
   states<-strains$name
   #m is the death rate function
-  # m is the reduction in bacteria fitness according to antibiotic concentration A
+  #m is the reduction in bacteria fitness according to antibiotic concentration A
+  #zeta is MIC(minimal inhibitory concentration) of the drug
+  #psi is the growth rate in the absences of antibiotics 
+  #phi is the maximum reduction in the fitness
+  #kappa is the slope
   m <- function(A, phi, psi, zeta, kappa) {
     phi * ((A / zeta) ^ kappa) / ((A / zeta) ^ kappa - (psi - phi) / psi)
   }
@@ -44,22 +49,22 @@ simulate <- function(strains, K, A, miu, tf=1000, Sini)
       #N define the whole population
       Sdie <<- x["S"]*m(A, phi, psi, zeta, kappa)# s dies
       Sgrowth <<- x["S"]*(psi*(1-(N)/K)*(1-miu)) # s grows
-      if(Sgrowth < 0) {
-        Sdie <<- Sdie - Sgrowth
-        Sgrowth <<- 0
+      if(Sgrowth < 0) { # to avoid the condition that we had negative growth 
+        Sdie <<- Sdie - Sgrowth # add to death population
+        Sgrowth <<- 0  # set the negative growth to zero
       }
     })
 
-    StoM<- numeric(n-1)
-    growthM <- numeric(n-1)
-    dieM <- numeric(n-1)
+    StoM<- numeric(n-1) # susceptible population mutated to mutation population 
+    growthM <- numeric(n-1) # mutation grows 
+    dieM <- numeric(n-1) # mutation dies
 
     for (i in 1:(n-1)) {
       with(as.list(c(states, pars$general,pars$S)), {
         N <- sum(unname(x[strains$name]))
-        StoM[i] <<- x["S"]*(psi*(1-(N)/K)*(miu/(n-1)))
-        if(StoM[i] < 0) {
-          StoM[i]<<-0
+        StoM[i] <<- x["S"]*(psi*(1-(N)/K)*(miu/(n-1))) # susceptible population mutated to mutation population 
+        if(StoM[i] < 0) { # to avoid the condition that we had negative population mutated 
+          StoM[i]<<-0 # set the negative to zero
         }
       })
     }
@@ -67,15 +72,15 @@ simulate <- function(strains, K, A, miu, tf=1000, Sini)
       with(as.list(c(states, pars$general, pars[[paste0("M", i)]])), {
         dieM[i] <<- x[paste0("M", i)]* m(A, phi, psi, zeta, kappa)
         N <- sum(unname(x[strains$name]))
-        growthM[i] <<- x[paste0("M", i)]*psi*(1-N/K)
-        if(growthM[i] < 0) {
-          dieM[i] <<- dieM[i] - growthM[i]
-          growthM[i] <<- 0
+        growthM[i] <<- x[paste0("M", i)]*psi*(1-N/K) # mutation grows
+        if(growthM[i] < 0) { # to avoid the condition that we had negative growth 
+          dieM[i] <<- dieM[i] - growthM[i] # add to death population
+          growthM[i] <<- 0 # set the negative growth to zero
         }
       })
     }
 
-    if(any(growthM < 0)) {
+    if(any(growthM < 0)) { # check to avoid the condition that we had negative growth 
       print(t)
       print(x)
       print(growthM)
@@ -99,13 +104,12 @@ simulate <- function(strains, K, A, miu, tf=1000, Sini)
                                        zeta = strains$zeta[i]))
   }
 
-  # Initialize variables using a loop
-  #for i in 1:17{
-    initial <- c(S=Sini) # initialize S
-  #}
+  
+  initial <- c(S=Sini) # initialize S
+  
   
   for (i in 1:(n-1)) {
-    initial[paste0("M", i)] <- 0
+    initial[paste0("M", i)] <- 0  # initialize mutations
   }
 
   r <- ssa.adaptivetau(initial, transitions, rates, pars, tf)
@@ -113,13 +117,12 @@ simulate <- function(strains, K, A, miu, tf=1000, Sini)
   return(r)
 }
 
-
-
+# analyseSims is used for analyzing the simulation results and generating results 
 analyseSims<-function(sims){
-  entropy_function <- function(p) {
+  entropy_function <- function(p) { # entropy function
     p <- p[p > 1e-10]
     - sum(p * log(p, base = 2))}
-#check the if the pop reach 0 the calculated had been excluded 
+
   
   for (i in 1:length(sims)) {
     
@@ -205,7 +208,7 @@ analyseSims<-function(sims){
     # Remove rows with NA values
     eucli_old_cleaned <- na.omit(eucli_old)
     ed_distance<-vegdist(eucli_old_cleaned,method="euclidean") #euclidean
-    average_ed <- mean(as.vector(ed_distance), na.rm = TRUE) #betadisper()
+    average_ed <- mean(as.vector(ed_distance), na.rm = TRUE) 
     sims_summary$ed_average[i] <-  average_ed
     
     #calculate the ed_without_wildtype_average
@@ -217,13 +220,13 @@ analyseSims<-function(sims){
     
     
     #calculate the Bray-Curtis_distance average
-    
+    # Remove rows with NA values
     bray_distance<-vegdist(eucli_old_cleaned,method="bray") 
     average_bray_distance <- mean(as.vector(bray_distance), na.rm = TRUE) 
     sims_summary$bray_distance_average[i] <-  average_bray_distance
     
     #calculate the bray_distancewithout_wildtype
-    
+    # Remove rows with NA values
     bray_distance_without_wildtype<-vegdist(eucli_new_cleaned,method="bray") #euclidean
     average_bray_without_wildtype <- mean(as.vector( bray_distance_without_wildtype), na.rm = TRUE) 
     sims_summary$bray_average_without_wildtype[i] <-  average_bray_without_wildtype
