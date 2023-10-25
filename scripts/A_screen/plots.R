@@ -112,19 +112,18 @@ ggsave("plots/A_screen/bray_average_without_wildtype_A_screen.pdf", plot6, width
 ggsave("plots/A_screen/sims_with_mutations_A_screen.pdf", plot7, width = 10, height = 10)
 
 # save the database
-#compount figure 4 A B C D without Wildtype 
 save(summary, file = "output/A_screen/summary_A.RData")
 
 
 
 
-
+#combine plots 
 library(cowplot)
 #Plot all graphs contains mutants
 plot_all_mutants<-plot_grid(plot7,plot3,plot4,plot6, labels = c("(a)", "(b)","(c)", "(d)"), hjust=0, vjust=1.3)
 #Plot all graphs contains S and mutants
 plot_all_S<-plot_grid(plot1,plot2,plot5, labels = c("(a)", "(b)","(c)"), hjust=0, vjust=1.3)
-
+#save all the plots we generated
 ggsave("plots/A_screen/plot_all_mutants.pdf", plot_all_mutants, width = 8, height = 8)
 ggsave("plots/A_screen/plot_all_S.pdf", plot_all_S, width = 8, height=8)
 

@@ -41,8 +41,11 @@ for (i in 1:length(A)) {
                         phi = phi,
                         kappa = kappa,
                         zeta = c(1, zeta_m))
+  #build a list for saving simulation inputs and results called sims
   sims[[i]] <- list()
+  #sims strains contain all the PD parameters such as psi, phi, kappa and zeta
   sims[[i]]$strains <- strains
+  #sims generalinput contain all the other variables
   sims[[i]]$generalinput <- c(K = K,
                               A = A[i],
                               miu = miu,
@@ -50,8 +53,8 @@ for (i in 1:length(A)) {
                               zeta_shape = zeta_shape,
                               zeta_scale = zeta_scale,
                               rseed = rseed)
-  
+  #sims results contain the simulation results
   sims[[i]]$results <- replicate(m, simulate(strains, K = K, A = A[i], miu = miu, Sini = Sini))
 }
-
+#save the simulation results to a file
 save(sims, file = paste0("output/A_screen/SimResults_A_screen_rep_", batch, ".RData"))
