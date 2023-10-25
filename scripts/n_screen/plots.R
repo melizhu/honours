@@ -114,12 +114,13 @@ ggsave("plots/n_screen/sims_with_mutations_nscreen_10^6.pdf", plot7, width = 8, 
 save(summary, file = "output/n_screen/summary_n.RData")
 
 #combine plots of the mutants
-
 library(cowplot)
 #Plot all graphs contains mutants
 plot_all_mutants<-plot_grid(plot7,plot3,plot4,plot6, labels = c("(a)", "(b)","(c)", "(d)"), hjust=0, vjust=1.3)
 #Plot all graphs contains S and mutants
 plot_all_S<-plot_grid(plot1,plot2,plot5, labels = c("(a)", "(b)","(c)"), hjust=0, vjust=1.3)
 
+#save plots of the mutants
 ggsave("plots/n_screen/plot_all_mutants.pdf", plot_all_mutants, width = 8, height = 8)
+#save plots of S and mutants
 ggsave("plots/n_screen/plot_all_S.pdf", plot_all_S, width = 8, height=8)
