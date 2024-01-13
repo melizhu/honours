@@ -112,7 +112,7 @@ simulate <- function(strains, K, A, miu, tf=1000, Sini)
     initial[paste0("M", i)] <- 0  # initialize mutations
   }
 
-  r <- ssa.adaptivetau(initial, transitions, rates, pars, tf)
+  r <- ssa.adaptivetau(initial, transitions, rates, pars, tf, tl.params = list(epsilon=0.01))
 
   return(r)
 }
