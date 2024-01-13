@@ -2,13 +2,13 @@
 library(tidyverse)
 #here we pick sim[[3]] results[[1]]
 i <- 3
-j <- 1
+j <- 4
 #plot this particular simulation result
 singlesim <- sims[[i]]$results[[j]] |>
   as.tibble() |>
   pivot_longer(-time)
 ggplot(singlesim) +
-  geom_line(aes(x = time, y = value, colour = name))
+  geom_line(aes(x = time, y = log(value), colour = name))
 
 #create a new big table for all the simulations
 t1 <- bind_rows(lapply(sims, function(sim) {
@@ -54,7 +54,7 @@ distribution <-
 barplot(
   distribution,
   col = "skyblue",
-  main = "Winning distribution of 1000 simulations",
+  main = "Proportion of the strains spread over 1000 simulations",
   xlab = "Categories",
   ylab = "Values"
 )
