@@ -5,7 +5,7 @@ l <-1
 m <- 1000
 repfile<-32
 
-#K is the changing parameter in the pop_screen #change this make it looks nice 
+#A is the changing parameter in the A_screen  
 A <-seq(0.8,1.3,by=0.05)
 
 
