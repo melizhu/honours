@@ -3,8 +3,8 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --partition=qbiol
-#SBATCH --mem=40GB                # memory (MB)
-#SBATCH --time=8-8:00           # time (D-HH:MM)
+#SBATCH --mem=20GB                # memory (MB)
+#SBATCH --time=4-4:00           # time (D-HH:MM)
 #SBATCH -o zScreen.%N.%j.out     # STDOUT
 #SBATCH -e zScreen.%N.%j.err     # STDERR
 #
