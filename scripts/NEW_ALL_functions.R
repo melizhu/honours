@@ -1,20 +1,21 @@
 library(adaptivetau)
 library(vegan)
 
+# pharmacodynamic (death rate) function:
+#PD is the reduction in bacteria fitness according to antibiotic concentration A
+#zeta is MIC(minimal inhibitory concentration) of the drug
+#psi is the growth rate in the absences of antibiotics 
+#phi is the maximum reduction in the fitness
+#kappa is the slope
+pd <- function(A, phi, psi, zeta, kappa) {
+  phi * ((A / zeta) ^ kappa) / ((A / zeta) ^ kappa - (psi - phi) / psi)
+}
+
 # simulate is used for generating simulations 
 simulate <- function(strains, K, A, miu, tf=1000, Sini)
 {
   n <- nrow(strains)
   states<-strains$name
-  #m is the death rate function
-  #m is the reduction in bacteria fitness according to antibiotic concentration A
-  #zeta is MIC(minimal inhibitory concentration) of the drug
-  #psi is the growth rate in the absences of antibiotics 
-  #phi is the maximum reduction in the fitness
-  #kappa is the slope
-  m <- function(A, phi, psi, zeta, kappa) {
-    phi * ((A / zeta) ^ kappa) / ((A / zeta) ^ kappa - (psi - phi) / psi)
-  }
 
   #built the transition rate at loop1 as events
 
@@ -29,7 +30,6 @@ simulate <- function(strains, K, A, miu, tf=1000, Sini)
     transitions[[i]] <- setNames(rep(0, length(states)), states)
     transitions[[i]][1]<--1
     transitions[[i]][i-1]<-1
-
   }
 
   for (i in 2:n){
@@ -47,7 +47,7 @@ simulate <- function(strains, K, A, miu, tf=1000, Sini)
     with(as.list(c(pars$general, pars$S)), {
       N <- sum(unname(x[strains$name]))
       #N define the whole population
-      Sdie <<- x["S"]*m(A, phi, psi, zeta, kappa)# s dies
+      Sdie <<- x["S"]*pd(A, phi, psi, zeta, kappa)# s dies
       Sgrowth <<- x["S"]*(psi*(1-(N)/K)*(1-miu)) # s grows
       if(Sgrowth < 0) { # to avoid the condition that we had negative growth 
         Sdie <<- Sdie - Sgrowth # add to death population
@@ -70,7 +70,7 @@ simulate <- function(strains, K, A, miu, tf=1000, Sini)
     }
     for (i in 1:(n-1)) {
       with(as.list(c(states, pars$general, pars[[paste0("M", i)]])), {
-        dieM[i] <<- x[paste0("M", i)]* m(A, phi, psi, zeta, kappa)
+        dieM[i] <<- x[paste0("M", i)]* pd(A, phi, psi, zeta, kappa)
         N <- sum(unname(x[strains$name]))
         growthM[i] <<- x[paste0("M", i)]*psi*(1-N/K) # mutation grows
         if(growthM[i] < 0) { # to avoid the condition that we had negative growth 
@@ -238,3 +238,20 @@ analyseSims<-function(sims){
   }
   return(sims_summary)
 }
+
+plot_PDs <- function(strains, A = 10^seq(-3, 5, by = 0.1)) {
+  pd_values <- expand_grid(name = strains$name, A = A) |>
+    arrange(name) |>
+    left_join(strains, by = join_by(name)) |>
+    mutate(w = psi - pd(A, phi, psi, zeta, kappa))
+  cols <- rep("grey", nrow(strains))
+  names(cols) <- strains$name
+  cols["S"] <- "green"
+  p <- ggplot(pd_values) +
+    geom_line(aes(x = A, y = w, col = name)) +
+    scale_x_log10() +
+    scale_color_manual(values = cols) +
+    theme_bw()
+  return(p)
+}
+
