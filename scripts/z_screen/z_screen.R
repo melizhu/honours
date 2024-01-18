@@ -22,7 +22,7 @@ phi <- 5.0  # maximum reduction in fitness
 kappa <- 2.5 # slope
 
 #zeta screen
-zeta_shape <- c(1, 2, 5, 10, 20, 50, 100, 200, 500, 1000)# random gamma distribution shape for generating mutation MIC
+zeta_shape <- 2^seq(-6, 9)#c(1, 2, 5, 10, 20, 50, 100, 200, 500, 1000)# random gamma distribution shape for generating mutation MIC
 zeta_scale <- 10/(zeta_shape) # random gamma distribution scale for generating mutation MIC
 
 # Initialize a list to store the data frames
@@ -65,4 +65,7 @@ for (i in 1:length(zeta_shape)) {
 }
 
 #save the simulation results to a file 
-save(sims, file = paste0("output/z_screen/SimResults_zeta_screen_rep_", batch, ".RData"))
+save(sims, file = paste0("output/z_screen/SimResults_z_screen_rep_", batch, ".RData"))
+
+# checking the PD curves:
+# plot_PDs(sims[[1]]$strains)
