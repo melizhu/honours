@@ -1,7 +1,7 @@
 n<-32
 # we want to keep the mean remain the same 
 #which is zeta_shape x zeta_scale is remain the same
-zeta_shape<-128   
+zeta_shape<-2   
 zeta_scale<-10/zeta_shape
 zeta_m<- rgamma(32, shape=zeta_shape,scale= zeta_scale)+1
 

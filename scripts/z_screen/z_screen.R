@@ -22,7 +22,7 @@ phi <- 5.0  # maximum reduction in fitness
 kappa <- 2.5 # slope
 
 #zeta screen
-zeta_shape <- 2^seq(-6, 9)#c(1, 2, 5, 10, 20, 50, 100, 200, 500, 1000)# random gamma distribution shape for generating mutation MIC
+zeta_shape <- 2^seq(-6, 9)
 zeta_scale <- 10/(zeta_shape) # random gamma distribution scale for generating mutation MIC
 
 # Initialize a list to store the data frames
